@@ -124,12 +124,16 @@ export class RokuService {
       const parsed = await parseStringPromise(xml);
       const apps = parsed.apps?.app || [];
       
-      return Array.isArray(apps) ? apps.map(app => ({
-        id: app.$.id,
-        name: app.$['version'] || app._,
-        type: app.$.type,
-        version: app.$.version
-      })) : [];
+      return Array.isArray(apps) ? apps.map(app => {
+        // Extract app name from text content (between tags)
+        const appName = app._ || app.$.id || 'Unknown App';
+        return {
+          id: app.$.id,
+          name: appName.trim(),
+          type: app.$.type || 'app',
+          version: app.$.version || 'unknown'
+        };
+      }) : [];
     } catch (error) {
       console.error('Error parsing apps XML:', error);
       return [];
@@ -150,7 +154,7 @@ export class RokuService {
 
       return {
         id: app.$.id,
-        name: app._,
+        name: (app._ || app.$.id || 'Unknown').trim(),
         type: app.$.type,
         version: app.$.version
       };
