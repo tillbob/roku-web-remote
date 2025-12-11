@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roku Web Remote</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app" class="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1>📺 Roku Web Remote</h1>
+                <div class="header-actions">
+                    <button id="discoverBtn" class="btn btn-primary" title="Discover Roku devices on network">
+                        🔍 Discover
+                    </button>
+                    <input 
+                        id="ipInput" 
+                        type="text" 
+                        class="input-field" 
+                        placeholder="Enter Roku IP (e.g., 192.168.1.100)" 
+                        autocomplete="off"
+                    >
+                    <button id="connectBtn" class="btn btn-primary">Connect</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Status Bar -->
+        <div id="status" class="status-bar" style="display:none;">
+            <span id="statusText"></span>
+        </div>
+
+        <!-- Discovery Results Modal -->
+        <div id="discoveryModal" class="modal" style="display:none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Discovered Roku Devices</h2>
+                    <button class="btn-close" id="closeDiscoveryBtn">×</button>
+                </div>
+                <div id="devicesList" class="devices-list"></div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content" id="mainContent" style="display:none;">
+            <!-- Device Info -->
+            <section class="device-info">
+                <div class="info-card">
+                    <h2 id="deviceName">Connected</h2>
+                    <p id="deviceIp" class="secondary-text"></p>
+                    <p id="activeApp" class="secondary-text">App: <span id="activeAppName">Loading...</span></p>
+                </div>
+            </section>
+
+            <!-- Remote Control -->
+            <section class="remote-section">
+                <h2>Remote Control</h2>
+                
+                <!-- Direction Pad -->
+                <div class="dpad-container">
+                    <div class="dpad">
+                        <button data-key="Up" class="dpad-btn dpad-up" title="Up">▲</button>
+                        <button data-key="Left" class="dpad-btn dpad-left" title="Left">◄</button>
+                        <button data-key="Select" class="dpad-btn dpad-select" title="Select">OK</button>
+                        <button data-key="Right" class="dpad-btn dpad-right" title="Right">►</button>
+                        <button data-key="Down" class="dpad-btn dpad-down" title="Down">▼</button>
+                    </div>
+                </div>
+
+                <!-- Volume & Power -->
+                <div class="control-group">
+                    <div class="volume-group">
+                        <button data-key="VolumeUp" class="btn btn-control" title="Volume Up">🔊 Vol+</button>
+                        <button data-key="VolumeMute" class="btn btn-control" title="Mute">🔇 Mute</button>
+                        <button data-key="VolumeDown" class="btn btn-control" title="Volume Down">🔉 Vol-</button>
+                    </div>
+                    <div class="power-group">
+                        <button data-key="Power" class="btn btn-danger" title="Toggle Power">⏻ Power</button>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <div class="nav-group">
+                    <button data-key="Home" class="btn btn-nav" title="Home">🏠 Home</button>
+                    <button data-key="Back" class="btn btn-nav" title="Back">↶ Back</button>
+                    <button data-key="Enter" class="btn btn-nav" title="Enter">↩ Enter</button>
+                    <button data-key="Info" class="btn btn-nav" title="Info">ℹ Info</button>
+                </div>
+
+                <!-- Playback Controls -->
+                <div class="playback-group">
+                    <button data-key="Play" class="btn btn-playback" title="Play">▶ Play</button>
+                    <button data-key="Pause" class="btn btn-playback" title="Pause">⏸ Pause</button>
+                    <button data-key="Rev" class="btn btn-playback" title="Rewind">⏪ Rev</button>
+                    <button data-key="Fwd" class="btn btn-playback" title="Forward">⏩ Fwd</button>
+                </div>
+
+                <!-- Text Input -->
+                <div class="text-input-group">
+                    <input 
+                        id="textInput" 
+                        type="text" 
+                        class="input-field" 
+                        placeholder="Type text to send to Roku..."
+                        autocomplete="off"
+                    >
+                    <button id="sendTextBtn" class="btn btn-primary">Send Text</button>
+                </div>
+            </section>
+
+            <!-- Apps Section -->
+            <section class="apps-section">
+                <h2>Installed Apps</h2>
+                <div id="appsList" class="apps-list"></div>
+            </section>
+        </main>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="empty-state">
+            <h2>👉 Connect to a Roku Device</h2>
+            <p>Enter the IP address of your Roku device or use the Discover button to find devices on your network.</p>
+        </div>
+    </div>
+
+    <script src="api.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
